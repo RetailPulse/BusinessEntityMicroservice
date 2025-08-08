@@ -1,8 +1,8 @@
-server.port: 8082
+server.port: 8085
 
 auth:
   enabled: false
-  origin: "http://localhost:4200"
+  origin: "http://retailpulse.me:4200"
   jwt.key.set.uri: http://app-iam:8081/oauth2/jwks
 
 spring:

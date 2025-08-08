@@ -1,4 +1,4 @@
-server.port: 8082
+server.port: 8085
 
 auth:
   enabled: false
@@ -14,7 +14,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     database-platform: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
 

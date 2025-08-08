@@ -137,12 +137,13 @@ public class BusinessEntityService {
                 updatedBusinessEntity.isActive());
     }
 
+    // todo - Finish this after inventory microservice is setup
     private boolean hasProductsInInventory(@NotNull Long id) {
         // Call InventoryService to check
 //        List<Inventory> inventories = inventoryRepository.findByBusinessEntityId(id);
 //        return inventories.stream().anyMatch(inventory -> inventory.getQuantity() > 0);
 
-        return true;
+        return false;
     }
 
 }

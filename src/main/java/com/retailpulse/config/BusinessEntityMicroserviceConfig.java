@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
@@ -35,21 +36,22 @@ public class BusinessEntityMicroserviceConfig {
     if (authEnabled) {
       System.out.println("Auth enabled");
       http.oauth2ResourceServer(
-          c -> c.jwt(
-            j -> j.jwkSetUri(keySetUri).jwtAuthenticationConverter(jwtAuthenticationConverter())
-          )
+              c -> c.jwt(
+                      j -> j.jwkSetUri(keySetUri).jwtAuthenticationConverter(jwtAuthenticationConverter())
+              )
       );
 
       http.authorizeHttpRequests(
-        c -> c.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-          .requestMatchers("/hello").authenticated()
-          .requestMatchers("/api/**").authenticated() //.hasRole("SUPER").anyRequest().authenticated()
+              c -> c.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                      .requestMatchers("/hello").authenticated()
+                      .requestMatchers("/api/**").authenticated() //.hasRole("SUPER").anyRequest().authenticated()
       );
     } else {
       System.out.println("No auth enabled");
-      http.authorizeHttpRequests(        
-        c -> c.anyRequest().permitAll()
+      http.authorizeHttpRequests(
+              c -> c.anyRequest().permitAll()
       );
+      http.csrf(AbstractHttpConfigurer::disable); // <--- Add this line
     }
 
     http.cors(c -> {

@@ -32,7 +32,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <spring-boot.run.arguments>--server.port=8082</spring-boot.run.arguments>
+                <spring-boot.run.arguments>--server.port=8085</spring-boot.run.arguments>
             </properties>
         </profile>
     </profiles>
