@@ -1,4 +1,4 @@
-package com.retailpulse.controller.request;
+package com.retailpulse.dto.request;
 
 public record BusinessEntityRequestDto(String name, String location, String type, Boolean external) {
 }
