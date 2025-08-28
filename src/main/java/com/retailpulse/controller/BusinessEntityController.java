@@ -1,8 +1,8 @@
 package com.retailpulse.controller;
 
 import com.retailpulse.controller.exception.ApplicationException;
-import com.retailpulse.controller.request.BusinessEntityRequestDto;
-import com.retailpulse.controller.response.BusinessEntityResponseDto;
+import com.retailpulse.dto.request.BusinessEntityRequestDto;
+import com.retailpulse.dto.response.BusinessEntityResponseDto;
 import com.retailpulse.service.BusinessEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
