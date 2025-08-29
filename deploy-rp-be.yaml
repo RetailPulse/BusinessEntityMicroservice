@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: deploy-rp-businessentity
+  name: deploy-rp-businessentity
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deploy-rp-businessentity
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: deploy-rp-businessentity
+    spec:
+      containers:
+      - image: docker.io/caspertech/myapp:latest
+        name: myapp
+        resources: {}
+status: {}
