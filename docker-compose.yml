@@ -23,24 +23,33 @@ services:
       - retailpulse-network
 
   app:
-    image: rp-businessentity-app:v0.1.0
-    container_name: app-rp-businessentity
-    build:
-      context: .
-      dockerfile: Dockerfile
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-rp-businessentity:3306/RPBusinessEntityDB
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: password
-      SERVER_PORT: 8082
-      AUTH_SERVER_URL: http://app-iam:8081
+   image: rp-businessentity-app:v0.1.0
+   container_name: app-rp-businessentity
+   build:
+     context: .
+     dockerfile: Dockerfile
+   environment:
+     SPRING_DATASOURCE_URL: jdbc:mysql://mysql-rp-businessentity:3306/RPBusinessEntityDB
+     SPRING_DATASOURCE_USERNAME: root
+     SPRING_DATASOURCE_PASSWORD: password
+     SERVER_PORT: 8082
+     AUTH_SERVER_URL: http://app-iam:8081
+   ports:
+     - "8082:8082"
+   depends_on:
+     mysql-rp-businessentity:
+       condition: service_healthy
+     # app-iam:
+     #   condition: service_started
+   networks:
+     - retailpulse-network
+
+  redis:
+    image: redis:7
+    container_name: redis-rp-businessentity
+    restart: always
     ports:
-      - "8082:8082"
-    depends_on:
-      mysql-rp-businessentity:
-        condition: service_healthy
-      # app-iam:
-      #   condition: service_started
+      - "6379:6379"
     networks:
       - retailpulse-network
 
