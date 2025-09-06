@@ -64,7 +64,7 @@ spec:
         name: myapp        
         volumeMounts:
         - name: config-volume
-          mountPath: /app/config/application.yaml
+          mountPath: /app/config
         resources: {}
       volumes:
       - name: config-volume
