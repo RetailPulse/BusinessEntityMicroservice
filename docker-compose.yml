@@ -22,7 +22,7 @@ services:
     networks:
       - retailpulse-network
 
-  app:
+  rp-businessentity-app:
     image: rp-businessentity-app:v0.1.0
     container_name: app-rp-businessentity
     build:
