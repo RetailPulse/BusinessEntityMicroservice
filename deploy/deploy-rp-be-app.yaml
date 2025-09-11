@@ -34,7 +34,7 @@ data:
 
       data:
         redis:
-          host: redis-rp
+          host: redis-rp-businessentity
           port: 6379
           password: ${REDIS_PASSWORD}
           timeout: 60000

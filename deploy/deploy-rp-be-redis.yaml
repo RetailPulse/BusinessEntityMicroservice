@@ -11,19 +11,19 @@ stringData:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redis-rp
+  name: redis-rp-businessentity
   namespace: ns-retailpulse
   labels:
-    app: redis-rp
+    app: redis-rp-businessentity
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: redis-rp
+      app: redis-rp-businessentity
   template:
     metadata:
       labels:
-        app: redis-rp
+        app: redis-rp-businessentity
     spec:
       containers:
         - name: redis
@@ -52,13 +52,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis-rp
+  name: redis-rp-businessentity
   namespace: ns-retailpulse
   labels:
-    app: redis-rp
+    app: redis-rp-businessentity
 spec:
   selector:
-    app: redis-rp
+    app: redis-rp-businessentity
   ports:
     - port: 6379
       targetPort: 6379
