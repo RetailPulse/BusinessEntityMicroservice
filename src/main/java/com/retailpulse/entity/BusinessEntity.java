@@ -20,7 +20,7 @@ public class BusinessEntity {
     @Column(nullable = false)
     private String type;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "`external`")
     private boolean external = false;
 
     @Column(nullable = false)

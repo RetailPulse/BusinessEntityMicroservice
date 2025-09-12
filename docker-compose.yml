@@ -21,7 +21,7 @@ services:
       timeout: 10s
     networks:
       - retailpulse-network
-
+      
   app:
    image: rp-businessentity-app:v0.1.0
    container_name: app-rp-businessentity

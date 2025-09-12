@@ -6,7 +6,7 @@ metadata:
 data:
   application.yaml: |
     server:
-      port: 8082
+      port: 8083
 
     auth:
       enabled: false
@@ -80,11 +80,11 @@ metadata:
     app: deploy-rp-businessentity
   name: svc-rp-businessentity
 spec:
-  ports:
-  - port: 8082
-    protocol: TCP
-    targetPort: 8082
-    nodePort: 30082
   selector:
     app: deploy-rp-businessentity
+  ports:
+  - port: 8083
+    protocol: TCP
+    targetPort: 8083
+    nodePort: 30083 
   type: NodePort
