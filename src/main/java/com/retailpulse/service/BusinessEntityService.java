@@ -1,25 +1,20 @@
 package com.retailpulse.service;
 
-//import com.retailpulse.controller.request.BusinessEntityRequestDto;
-//import com.retailpulse.controller.response.BusinessEntityResponseDto;
-//import com.retailpulse.entity.BusinessEntity;
-//import com.retailpulse.entity.Inventory;
 import com.retailpulse.dto.request.BusinessEntityRequestDto;
 import com.retailpulse.dto.response.BusinessEntityResponseDto;
 import com.retailpulse.entity.BusinessEntity;
 import com.retailpulse.repository.BusinessEntityRepository;
-//import com.retailpulse.repository.InventoryRepository;
-//import com.retailpulse.service.exception.BusinessException;
-//import org.jetbrains.annotations.NotNull;
 import com.retailpulse.service.exception.BusinessException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.function.Consumer;
 
 @Service
+@CacheConfig(cacheNames = {"businessEntity", "businessEntityList"})
 public class BusinessEntityService {
     private static final String BUSINESS_ENTITY_NOT_FOUND = "BUSINESS_ENTITY_NOT_FOUND";
     private static final String BUSINESS_ENTITY_DELETED = "BUSINESS_ENTITY_DELETED";
@@ -35,8 +30,9 @@ public class BusinessEntityService {
 //        this.inventoryRepository = inventoryRepository;
     }
 
+    @Cacheable(value = "businessEntityList")
     public List<BusinessEntityResponseDto> getAllBusinessEntities() {
-        List<BusinessEntityResponseDto> businessEntities = businessEntityRepository.findAll().stream()
+        return businessEntityRepository.findAll().stream()
                 .map(businessEntity -> new BusinessEntityResponseDto(
                         businessEntity.getId(),
                         businessEntity.getName(),
@@ -46,10 +42,9 @@ public class BusinessEntityService {
                         businessEntity.isActive()
                 ))
                 .toList();
-
-        return businessEntities;
     }
 
+    @Cacheable(value = "businessEntity", key = "#id")
     public BusinessEntityResponseDto getBusinessEntityById(Long id) {
         BusinessEntity businessEntity = businessEntityRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(BUSINESS_ENTITY_NOT_FOUND, BUSINESS_ENTITY_NOT_FOUND_DESC + id));
@@ -62,6 +57,10 @@ public class BusinessEntityService {
                 businessEntity.isActive());
     }
 
+    @Caching(
+        put = { @CachePut(value = "businessEntity", key = "#result.id") },
+        evict = { @CacheEvict(value = "businessEntityList", allEntries = true) }
+    )
     public BusinessEntityResponseDto saveBusinessEntity(BusinessEntityRequestDto request) {
         BusinessEntity businessEntity = new BusinessEntity(request.name(), request.location(), request.type(), request.external());
         BusinessEntity savedBusinessEntity = businessEntityRepository.save(businessEntity);
@@ -75,6 +74,10 @@ public class BusinessEntityService {
         );
     }
 
+    @Caching(
+        put = { @CachePut(value = "businessEntity", key = "#id") },
+        evict = { @CacheEvict(value = "businessEntityList", allEntries = true) }
+    )
     public BusinessEntityResponseDto updateBusinessEntity(Long id, BusinessEntityRequestDto businessEntityDetails) {
         BusinessEntity businessEntity = businessEntityRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(BUSINESS_ENTITY_NOT_FOUND, BUSINESS_ENTITY_NOT_FOUND_DESC + id));
@@ -111,6 +114,12 @@ public class BusinessEntityService {
         updater.accept(newValue);
     }
 
+    @Caching(
+        evict = {
+            @CacheEvict(value = "businessEntity", key = "#id"),
+            @CacheEvict(value = "businessEntityList", allEntries = true)
+        }
+    )
     public BusinessEntityResponseDto deleteBusinessEntity(Long id) {
         BusinessEntity businessEntity = businessEntityRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(BUSINESS_ENTITY_NOT_FOUND, BUSINESS_ENTITY_NOT_FOUND_DESC + id));
