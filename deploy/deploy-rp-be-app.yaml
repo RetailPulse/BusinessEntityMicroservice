@@ -29,6 +29,16 @@ data:
         database-platform: org.hibernate.dialect.MySQL8Dialect
         show-sql: true
 
+      cache:
+        type: redis
+
+      data:
+        redis:
+          host: redis-rp-businessentity
+          port: 6379
+          password: ${REDIS_PASSWORD}
+          timeout: 60000
+
     logging:
       level:
         root: INFO
@@ -47,7 +57,7 @@ metadata:
   name: deploy-rp-businessentity
   namespace: ns-retailpulse
   labels:
-    app: deploy-rp-businessentity  
+    app: deploy-rp-businessentity
 spec:
   replicas: 1
   selector:
@@ -60,8 +70,14 @@ spec:
         app: deploy-rp-businessentity
     spec:
       containers:
-      - image: docker.io/casperyap/rp-businessentity-app:v0.1.0
-        name: myapp        
+      - image: docker.io/galvinlwy/rp-businessentity-app-local:v0.1.0
+        name: myapp
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-redis
+              key: REDIS_PASSWORD
         volumeMounts:
         - name: config-volume
           mountPath: /app/config
