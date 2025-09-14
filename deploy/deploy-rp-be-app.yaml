@@ -70,8 +70,9 @@ spec:
         app: deploy-rp-businessentity
     spec:
       containers:
-      - image: docker.io/galvinlwy/rp-businessentity-app-local:v0.1.0
-        name: myapp
+      - image: docker.io/casperyap/rp-businessentity-app:v0.1.0
+        name: app-rp-businessentity
+        imagePullPolicy: Always
         env:
         - name: REDIS_PASSWORD
           valueFrom:
@@ -94,6 +95,7 @@ kind: Service
 metadata:
   labels:
     app: deploy-rp-businessentity
+    namespace: ns-retailpulse
   name: svc-rp-businessentity
 spec:
   selector:
