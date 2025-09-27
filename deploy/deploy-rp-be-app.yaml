@@ -69,10 +69,51 @@ spec:
       labels:
         app: deploy-rp-businessentity
     spec:
+      initContainers:
+        # Wait for MySQL Service to be reachable
+        - name: wait-for-mysql
+          image: busybox:1.35
+          command:
+            - sh
+            - -c
+            - >
+              until nc -z mysql-rp-businessentity 3306; do
+                echo "Waiting for MySQL at mysql-rp-businessentity:3306...";
+                sleep 5;
+              done;
+              echo "MySQL is ready!";
+          env:
+            - name: MYSQL_HOST
+              value: mysql-rp-businessentity
+            - name: MYSQL_PORT
+              value: "3306"
+
+        # Wait for Redis Service to be reachable
+        - name: wait-for-redis
+          image: redis:7.2
+          command:
+            - sh
+            - -c
+            - >
+              until redis-cli -h redis-rp-businessentity -p 6379 -a $$REDIS_PASSWORD ping; do
+                echo "Waiting for Redis at redis-rp-businessentity:6379...";
+                sleep 5;
+              done;
+              echo "Redis is ready!";
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-redis
+                  key: REDIS_PASSWORD
+            - name: REDIS_HOST
+              value: redis-rp-businessentity
+            - name: REDIS_PORT
+              value: "6379"
       containers:
-      - image: docker.io/casperyap/rp-businessentity-app:v0.1.0
+      - image: rp-businessentity-app:v0.1.0 #docker.io/casperyap/
         name: app-rp-businessentity
-        imagePullPolicy: Always
+        imagePullPolicy: Never #Always
         env:
         - name: REDIS_PASSWORD
           valueFrom:
