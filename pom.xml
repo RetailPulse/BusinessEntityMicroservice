@@ -21,23 +21,23 @@
     <!-- Spring Cloud BOM aligned with Spring Boot 3.5.x -->
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>2025.0.0</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>            
-            <dependency>
-              <groupId>commons-fileupload</groupId>
-              <artifactId>commons-fileupload</artifactId>
-              <version>1.6.0</version>
-          </dependency>
-          <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.18.0</version>
-        </dependency>
+              <dependency>
+                  <groupId>org.springframework.cloud</groupId>
+                  <artifactId>spring-cloud-dependencies</artifactId>
+                  <version>2025.0.0</version>
+                  <type>pom</type>
+                  <scope>import</scope>
+              </dependency>            
+              <dependency>
+                  <groupId>commons-fileupload</groupId>
+                  <artifactId>commons-fileupload</artifactId>
+                  <version>1.6.0</version>
+              </dependency>
+              <dependency>
+                  <groupId>org.apache.commons</groupId>
+                  <artifactId>commons-lang3</artifactId>
+                  <version>3.18.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
