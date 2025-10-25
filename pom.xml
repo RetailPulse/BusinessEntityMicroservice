@@ -54,7 +54,7 @@
         <!-- Sonar config (unchanged) -->
         <sonar.organization>retailpulse</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.projectKey>RetailPulse_businessEntityMicroservice</sonar.projectKey>
+        <sonar.projectKey>RetailPulse_BusinessEntityMicroservice</sonar.projectKey>
         <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     </properties>
 
